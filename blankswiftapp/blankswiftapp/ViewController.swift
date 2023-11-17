@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         sample_btn.layer.cornerRadius = sample_btn.frame.height/2.2
         sample_btn.layer.borderWidth = 2
         sample_btn.setTitle("  hello  ", for: .normal)
+        sample_btn.setTitleColor(UIColor.blue, for: .highlighted)
 
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [UIColor.white.cgColor, UIColor.gray.cgColor, UIColor.black.cgColor]
@@ -42,7 +43,7 @@ class ViewController: UIViewController {
         
         let colorAnimation = CABasicAnimation(keyPath: "colors")
         colorAnimation.fromValue = [firstColor, secondColor, thirdColor]
-        colorAnimation.toValue = [thirdColor, firstColor, secondColor]
+        colorAnimation.toValue = [secondColor, thirdColor, firstColor]
         colorAnimation.duration = 3.0
         colorAnimation.autoreverses = true
         colorAnimation.repeatCount = .infinity
