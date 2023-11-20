@@ -11,32 +11,48 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var sample_btn: UIButton!
     let gradientLayer = CAGradientLayer()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
         SetUpUI()
         sample_btn.addTarget(self, action: #selector(ButtonTapped), for: .touchUpInside)
     }
     
     private func SetUpUI() {
-        let fristColor = UIColor.random().cgColor
-        let secondColor = UIColor.random().cgColor
-        sample_btn.layer.cornerRadius = sample_btn.frame.height/2
+        sample_btn.layer.cornerRadius = sample_btn.frame.height/2.2
+        sample_btn.layer.borderWidth = 2
+        sample_btn.setTitle("  hello  ", for: .normal)
+        sample_btn.setTitleColor(UIColor.blue, for: .highlighted)
+
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [fristColor, secondColor]
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.gray.cgColor, UIColor.black.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 1 )
-        
         view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func animatedGradientBackground() {
+        let firstColor = UIColor.random().cgColor
+        let secondColor = UIColor.random().cgColor
+        let thirdColor = UIColor.random().cgColor
+        
+        
         let colorAnimation = CABasicAnimation(keyPath: "colors")
-        colorAnimation.fromValue = [fristColor, secondColor]
-        colorAnimation.toValue = [secondColor, fristColor]
+        colorAnimation.fromValue = [firstColor, secondColor, thirdColor]
+        colorAnimation.toValue = [secondColor, thirdColor, firstColor]
         colorAnimation.duration = 3.0
         colorAnimation.autoreverses = true
         colorAnimation.repeatCount = .infinity
         
         gradientLayer.add(colorAnimation, forKey: "gradientColorChange")
+    }
+    
+    @objc func AppBecomeActive() {
+        animatedGradientBackground()
     }
     
     @objc func ButtonTapped() {
